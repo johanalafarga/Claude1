@@ -120,7 +120,7 @@ const slides = [
 const newCarousel = {
   id: "p6-miedo-brillar-2026",
   name: "Pieza 6 — Miedo a Brillar",
-  aspectRatio: "square",
+  aspectRatio: "1:1",
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   slides,
