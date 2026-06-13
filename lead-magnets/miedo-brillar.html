@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Miedo a Brillar — Soy Magnetik</title>
+<meta name="description" content="4 verdades sobre lo que realmente te detiene cuando intentas brillar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --oro:#C9B06B;--oro-light:#DEC98A;--oro2:rgba(201,176,107,.1);--oro3:rgba(201,176,107,.25);
+  --lavanda:#9B85C0;--lavanda-light:#EAE2F4;--lav2:rgba(155,133,192,.1);--lav3:rgba(155,133,192,.25);
+  --crema:#F6F1EA;--crema-dark:#EDE6D6;
+  --grafito:#26262A;--grafito-mid:#48484C;
+  --ff-d:'Cormorant Garamond',Georgia,serif;
+  --ff-b:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--crema);color:var(--grafito);font-family:var(--ff-b);font-weight:300;overflow-x:hidden;}
+
+.topbar{padding:24px 6vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,176,107,.15);}
+.topbar-logo{font-family:var(--ff-d);font-size:1.2rem;font-weight:500;color:var(--grafito);text-decoration:none;letter-spacing:.04em;}
+.topbar-logo b{color:var(--oro);font-weight:500}
+.topbar-tag{font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--oro);}
+
+/* HERO — fondo lavanda */
+.hero{background:var(--lavanda-light);padding:80px 6vw 72px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(155,133,192,.15) 0%,transparent 65%);pointer-events:none;}
+.hero-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--lavanda);margin-bottom:28px;}
+.hero-h1{font-family:var(--ff-d);font-size:clamp(2.4rem,5vw,4rem);font-weight:300;line-height:1.1;color:var(--grafito);margin-bottom:24px;}
+.hero-h1 em{font-style:italic;color:var(--lavanda);}
+.hero-sub{font-family:var(--ff-d);font-size:clamp(1rem,1.8vw,1.25rem);font-style:italic;font-weight:300;color:var(--grafito-mid);max-width:600px;margin:0 auto 48px;line-height:1.7;}
+.hero-line{width:40px;height:1.5px;background:var(--lavanda);margin:0 auto;}
+
+/* INTRO */
+.intro{padding:72px 6vw;max-width:760px;margin:0 auto;}
+.intro-body{font-size:1.05rem;font-weight:300;line-height:1.9;color:var(--grafito-mid);margin-bottom:20px;}
+.intro-body strong{color:var(--grafito);font-weight:400;}
+.intro-body em{font-style:italic;color:var(--grafito);}
+.pull-quote{font-family:var(--ff-d);font-size:1.4rem;font-style:italic;font-weight:300;line-height:1.5;color:var(--grafito);padding:28px 32px;border-left:2px solid var(--lavanda);background:rgba(155,133,192,.07);border-radius:0 8px 8px 0;margin:36px 0;}
+
+/* VERDADES */
+.verdades{padding:72px 6vw;background:var(--grafito);}
+.verdades-inner{max-width:760px;margin:0 auto;}
+.sec-eyebrow{font-size:.68rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(168,159,216,.6);margin-bottom:20px;}
+.sec-title{font-family:var(--ff-d);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;line-height:1.15;color:var(--crema);margin-bottom:48px;}
+.sec-title em{font-style:italic;color:#C4B0DC;}
+.verdad-item{padding:40px 0;border-top:1px solid rgba(168,159,216,.12);}
+.verdad-item:last-child{border-bottom:1px solid rgba(168,159,216,.12);}
+.verdad-num{font-family:var(--ff-d);font-size:3.5rem;font-weight:300;color:rgba(168,159,216,.2);line-height:1;margin-bottom:12px;}
+.verdad-titulo{font-family:var(--ff-d);font-size:1.45rem;font-weight:400;color:var(--crema);line-height:1.3;margin-bottom:16px;}
+.verdad-titulo em{font-style:italic;color:#C4B0DC;}
+.verdad-body{font-size:.9rem;font-weight:300;line-height:1.85;color:rgba(246,241,234,.5);}
+.verdad-pregunta{display:block;margin-top:18px;font-family:var(--ff-d);font-size:1.05rem;font-style:italic;font-weight:300;color:rgba(201,176,107,.7);line-height:1.5;}
+
+/* REENCUADRE */
+.reencuadre{padding:72px 6vw;max-width:760px;margin:0 auto;}
+.rbox{background:var(--lavanda-light);border-radius:8px;padding:44px;border:1px solid rgba(155,133,192,.25);}
+.rbox-title{font-family:var(--ff-d);font-size:1.6rem;font-weight:400;color:var(--grafito);margin-bottom:20px;}
+.rbox-body{font-size:.95rem;font-weight:300;line-height:1.85;color:var(--grafito-mid);margin-bottom:16px;}
+.rbox-body strong{color:var(--grafito);font-weight:400;}
+.rbox-afirmaciones{list-style:none;margin:24px 0;display:flex;flex-direction:column;gap:14px;}
+.rbox-afirmaciones li{display:flex;align-items:flex-start;gap:14px;font-family:var(--ff-d);font-size:1.05rem;font-style:italic;font-weight:300;color:var(--grafito);line-height:1.5;}
+.rbox-dot{width:6px;height:6px;border-radius:50%;background:var(--lavanda);flex-shrink:0;margin-top:10px;}
+
+/* CTA */
+.cta-section{background:var(--grafito);padding:80px 6vw;text-align:center;}
+.cta-inner{max-width:600px;margin:0 auto;}
+.cta-eyebrow{font-size:.68rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(168,159,216,.5);margin-bottom:28px;}
+.cta-title{font-family:var(--ff-d);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.15;color:var(--crema);margin-bottom:20px;}
+.cta-title em{font-style:italic;color:#C4B0DC;}
+.cta-body{font-size:.95rem;font-weight:300;line-height:1.75;color:rgba(246,241,234,.42);margin-bottom:40px;}
+.btn-lav{display:inline-block;background:var(--lavanda);color:#fff;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:17px 38px;border-radius:100px;transition:background .25s,transform .2s;}
+.btn-lav:hover{background:#8573b0;transform:translateY(-2px);}
+.btn-outline{display:inline-block;border:1px solid rgba(246,241,234,.18);color:rgba(246,241,234,.5);font-size:.78rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:17px 38px;border-radius:100px;margin-top:14px;transition:border-color .25s,color .25s;display:block;}
+.btn-outline:hover{border-color:#C4B0DC;color:#C4B0DC;}
+.cta-trigger{margin-top:36px;padding-top:28px;border-top:1px solid rgba(168,159,216,.12);}
+.cta-trigger-txt{font-size:.82rem;color:rgba(246,241,234,.32);line-height:1.6;}
+.cta-trigger-word{font-size:1.1rem;font-weight:600;color:rgba(168,159,216,.65);letter-spacing:.12em;display:block;margin-top:8px;}
+
+.footer{padding:36px 6vw;border-top:1px solid rgba(168,159,216,.1);background:var(--grafito);text-align:center;}
+.footer-logo{font-family:var(--ff-d);font-size:1.1rem;font-weight:400;color:rgba(246,241,234,.38);letter-spacing:.08em;}
+.footer-logo b{color:var(--oro);font-weight:400;}
+.footer-link{font-size:.75rem;color:rgba(246,241,234,.2);text-decoration:none;letter-spacing:.1em;display:block;margin-top:8px;}
+.footer-link:hover{color:rgba(246,241,234,.45);}
+
+@media(max-width:640px){
+  .hero{padding:60px 5vw 52px}
+  .intro,.reencuadre{padding:52px 5vw}
+  .verdades{padding:52px 5vw}
+  .rbox{padding:28px 24px}
+  .cta-section{padding:60px 5vw}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-logo">Soy <b>Magnetik</b></a>
+  <span class="topbar-tag">Guía gratuita</span>
+</div>
+
+<section class="hero">
+  <p class="hero-eyebrow">Lo que nadie te dijo</p>
+  <h1 class="hero-h1">El miedo<br>a <em>brillar</em></h1>
+  <p class="hero-sub">4 verdades sobre lo que realmente te detiene cuando intentas ocupar el espacio que mereces.</p>
+  <div class="hero-line"></div>
+</section>
+
+<section class="intro">
+  <p class="intro-body">No tienes miedo al fracaso. Eso ya lo sabes — <strong>has fallado antes y te levantaste.</strong> Lo que da miedo de verdad es algo más sutil: el éxito. La visibilidad. Ser vista exactamente como eres.</p>
+  <p class="intro-body">El miedo a brillar no viene de la debilidad. Viene de una inteligencia emocional muy desarrollada que aprendió a <em>protegerte</em> — aunque hoy esa protección se haya convertido en una jaula.</p>
+  <div class="pull-quote">"No es que no puedas brillar. Es que una parte de ti tiene razones muy concretas para no hacerlo. Cuando las veas, todo cambia."</div>
+  <p class="intro-body">Aquí están las 4 verdades que nadie te explica. Léelas despacio. Observa cuál duele más — esa es la tuya.</p>
+</section>
+
+<section class="verdades">
+  <div class="verdades-inner">
+    <p class="sec-eyebrow">Las 4 verdades</p>
+    <h2 class="sec-title">Por qué te<br><em>apagas a propósito.</em></h2>
+
+    <div class="verdad-item">
+      <div class="verdad-num">01</div>
+      <h3 class="verdad-titulo">Miedo a no <em>reconocerte</em></h3>
+      <p class="verdad-body">Cuando brillas, ya no eres quien la gente conoció. Ya no eres quien tú conocías. Cambiar de nivel implica cambiar de identidad — y perder esa versión familiar de ti misma da más miedo que cualquier fracaso externo. El personaje "yo que no puede más de esto" es conocido. Seguro. Aunque duela.</p>
+      <span class="verdad-pregunta">¿De qué versión de ti tendrías que despedirte para brillar de verdad?</span>
+    </div>
+
+    <div class="verdad-item">
+      <div class="verdad-num">02</div>
+      <h3 class="verdad-titulo">Miedo a perder a <em>quienes amas</em></h3>
+      <p class="verdad-body">¿Y si al crecer ya no encajas donde siempre encajaste? ¿Y si tu éxito hace que otros se sientan menos? El miedo a la soledad en lo alto es real y es silencioso. Muchas personas se apagan no por falta de capacidad, sino para no dejar a nadie atrás — o para no tener que manejar la incomodidad de haber llegado más lejos.</p>
+      <span class="verdad-pregunta">¿A quién crees inconscientemente que perderías si alcanzas lo que realmente quieres?</span>
+    </div>
+
+    <div class="verdad-item">
+      <div class="verdad-num">03</div>
+      <h3 class="verdad-titulo">Miedo a que <em>te pidan más</em></h3>
+      <p class="verdad-body">Si muestras que puedes, ya no hay excusas. Tendrás que mantener ese nivel. Ser vista como capaz trae responsabilidades que quizás no sientes lista para asumir. La mediocridad estratégica — hacer menos de lo que puedes — es una forma de protegerse de las demandas que viene con la excelencia visible.</p>
+      <span class="verdad-pregunta">¿Qué tendrías que hacer diferente si demuestras que puedes más de lo que muestras?</span>
+    </div>
+
+    <div class="verdad-item">
+      <div class="verdad-num">04</div>
+      <h3 class="verdad-titulo">Miedo a que tu luz <em>incomode</em></h3>
+      <p class="verdad-body">Que te llamen arrogante. Que otros se sientan mal. Que tu brillo sea demasiado para quienes te rodean. Y entonces aprendiste algo peligroso: que apagarte es un acto de amor. Que hacerte pequeña es generosa. Que ocupar menos espacio del que mereces te hace buena persona. No lo es. Es un sacrificio que nadie te pidió.</p>
+      <span class="verdad-pregunta">¿Quién te enseñó que brillar era peligroso o egoísta?</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="reencuadre">
+  <div class="rbox">
+    <h3 class="rbox-title">El reencuadre</h3>
+    <p class="rbox-body">Ahora que las ves, estas cuatro razones dejan de ser obstáculos invisibles para convertirse en trabajo concreto. Y hay algo importante que debes saber:</p>
+    <p class="rbox-body"><strong>No son fallas de carácter. Son respuestas aprendidas que ya no te sirven.</strong></p>
+    <ul class="rbox-afirmaciones">
+      <li><span class="rbox-dot"></span>Brillar no te aleja de quien amas. Atrae a quien puede verte de verdad.</li>
+      <li><span class="rbox-dot"></span>Ocupar tu espacio no es arrogancia. Es integridad.</li>
+      <li><span class="rbox-dot"></span>No tienes que elegir entre ser querida y ser poderosa.</li>
+      <li><span class="rbox-dot"></span>La versión de ti que brilla no reemplaza a quien eres — la completa.</li>
+    </ul>
+    <p class="rbox-body">El siguiente paso no es información. Es acompañamiento.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <p class="cta-eyebrow">Lo que sigue</p>
+    <h2 class="cta-title">Ya viste el patrón.<br><em>Ahora lo trabajamos.</em></h2>
+    <p class="cta-body">Una conversación de 30 minutos para que me cuentes cuál de las 4 verdades resonó más — y ver juntas qué hay debajo. Sin compromiso. Sin venta. Solo claridad.</p>
+    <a href="https://soymagnetik.com#invitacion" class="btn-lav">Agendar conversación gratuita</a>
+    <a href="https://soymagnetik.com/espejo" class="btn-outline">O explora El Espejo del Ser →</a>
+    <div class="cta-trigger">
+      <p class="cta-trigger-txt">¿Llegaste aquí desde Instagram?<br>Escríbeme en los comentarios:</p>
+      <span class="cta-trigger-word">BRILLAR</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p class="footer-logo">Soy <b>Magnetik</b> · Johana Lafarga</p>
+  <a href="https://soymagnetik.com" class="footer-link">soymagnetik.com</a>
+</footer>
+
+</body>
+</html>
