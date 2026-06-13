@@ -1,0 +1,9 @@
+Pon aqui tus 4 fotos con exactamente estos nombres:
+
+  hero.png        → foto tuya principal (close-up, fondo oscuro o neutro)
+  johana.png      → foto mas calida / natural (seccion "sobre mi")
+  campo.png       → imagen de fondo abstracta o naturaleza (seccion "el ruido")
+  invitacion.png  → foto intima, tu mirando a camara (seccion final CTA)
+
+Formato: PNG o JPG (cambia la extension en index.html si usas .jpg)
+Tamano recomendado: 1200px o mas de ancho

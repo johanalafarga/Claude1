@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Espejo del Ser — Soy Magnetik</title>
+<meta name="description" content="Una herramienta para recordar quién eres.">
+<meta property="og:title" content="El Espejo del Ser — Soy Magnetik">
+<meta property="og:description" content="Una herramienta para recordar quién eres.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--surface:#111118;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+  --text:#f0eee8;--muted:rgba(240,238,232,0.45);--dim:rgba(240,238,232,0.18);
+  --gold:#c9a96e;--gold2:rgba(201,169,110,0.12);--gold3:rgba(201,169,110,0.25);
+  --lavender:#a89fd8;--lav2:rgba(168,159,216,0.1);--lav3:rgba(168,159,216,0.25);
+  --verde:#7db899;--verde2:rgba(125,184,153,0.1);--verde3:rgba(125,184,153,0.25);
+  --magenta:#d4678a;--mag2:rgba(212,103,138,0.1);--mag3:rgba(212,103,138,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;animation:pstar 4s ease-in-out infinite}
+@keyframes pstar{0%,100%{opacity:.05}50%{opacity:.28}}
+.page{position:relative;z-index:1;width:100%;max-width:640px;padding:3rem 1.5rem 4rem;display:flex;flex-direction:column;align-items:center;gap:2rem;}
+
+/* header */
+.header{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.titulo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);letter-spacing:.04em;line-height:1.2;}
+.titulo em{font-style:italic;color:var(--gold)}
+.subtitulo{font-size:13px;color:var(--muted);letter-spacing:.04em;margin-top:2px;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.firma{display:flex;align-items:center;gap:7px;margin-top:6px;}
+.firma-line{width:28px;height:.5px;background:var(--border2)}
+.firma-text{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+/* mirror */
+.mirror-wrap{position:relative;width:190px;height:190px;cursor:pointer;-webkit-tap-highlight-color:transparent;margin:.5rem 0;}
+.ring{position:absolute;border-radius:50%;border:.5px solid var(--border)}
+.r1{inset:0;border-color:rgba(201,169,110,0.18);animation:rs 22s linear infinite}
+.r2{inset:15px;border-color:var(--border);animation:rs 34s linear infinite reverse}
+.r3{inset:30px;border-color:var(--border);border-style:dashed;animation:rs 16s linear infinite}
+@keyframes rs{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.rdot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.55;top:-3px;left:calc(50% - 3px);transform-origin:center 95px;}
+.mirror-core{position:absolute;inset:40px;border-radius:50%;background:linear-gradient(135deg,#16151f,#1a1928);border:.5px solid rgba(201,169,110,0.2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;transition:all .5s ease;}
+.mirror-wrap:hover .mirror-core,.mirror-wrap:focus .mirror-core{border-color:rgba(201,169,110,0.45);background:linear-gradient(135deg,#1e1d2e,#201f30);}
+.mirror-sym{font-size:26px;transition:all .6s ease;color:var(--gold)}
+.mirror-hint{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.mirror-wrap.loading .mirror-sym{animation:spin-sym 1.2s linear infinite}
+@keyframes spin-sym{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* modes */
+.modes{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.mbtn{padding:6px 14px;border-radius:100px;border:.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;letter-spacing:.06em;cursor:pointer;transition:all .25s;}
+.mbtn:hover{border-color:var(--border2);color:var(--text)}
+.mbtn.on{background:var(--gold2);border-color:var(--gold3);color:var(--gold)}
+.mbtn.on.accion{background:var(--verde2);border-color:var(--verde3);color:var(--verde)}
+.mbtn.on.delusional{background:var(--mag2);border-color:var(--mag3);color:var(--magenta)}
+.delusional-card::before{background:radial-gradient(ellipse at 50% 0%,rgba(212,103,138,0.07) 0%,transparent 65%) !important;}
+.delusional-lbl{color:rgba(212,103,138,0.5) !important;}
+.delusional-box{
+  width:100%;
+  background:rgba(212,103,138,0.05);
+  border:.5px solid rgba(212,103,138,0.2);
+  border-radius:12px;
+  padding:1.25rem 1.5rem;
+  display:none;flex-direction:column;gap:10px;
+  margin-top:-0.5rem;
+}
+.delusional-box.visible{display:flex}
+.delusional-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(212,103,138,0.5)}
+.delusional-texto{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--text);line-height:1.7;}
+.delusional-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-style:italic;
+  color:var(--magenta);opacity:.7;
+  padding-top:8px;border-top:.5px solid rgba(212,103,138,0.12);
+  text-align:center;letter-spacing:.04em;
+}
+.delusional-check{
+  width:20px;height:20px;border-radius:5px;
+  border:.5px solid rgba(212,103,138,0.35);
+  background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .25s;
+}
+.delusional-check.done{background:rgba(212,103,138,0.15);border-color:var(--magenta);}
+.delusional-check svg{display:none}
+.delusional-check.done svg{display:block}
+.delusional-commit-lbl{font-size:12px;color:var(--muted);cursor:pointer;line-height:1.4;font-style:italic;font-family:'Cormorant Garamond',serif}
+.delusional-commit-lbl.done{color:var(--magenta);text-decoration:line-through;text-decoration-color:rgba(212,103,138,0.4);}
+
+/* card */
+.card{width:100%;background:var(--surface);border:.5px solid var(--border);border-radius:16px;padding:2rem;text-align:center;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:all .4s ease;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,169,110,0.04) 0%,transparent 65%);pointer-events:none;}
+.card.accion-card::before{background:radial-gradient(ellipse at 50% 0%,rgba(125,184,153,0.06) 0%,transparent 65%);}
+.card-lbl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+.card-lbl.accion-lbl{color:rgba(125,184,153,0.5)}
+.card-main{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--text);line-height:1.75;max-width:460px;}
+.card-sub{font-size:13px;color:var(--muted);line-height:1.6;font-style:italic;font-family:'Cormorant Garamond',serif}
+
+/* accion box — destaca la acción */
+.accion-box{
+  width:100%;
+  background:rgba(125,184,153,0.06);
+  border:.5px solid rgba(125,184,153,0.2);
+  border-radius:12px;
+  padding:1.25rem 1.5rem;
+  display:none;flex-direction:column;gap:8px;
+  margin-top:-0.5rem;
+}
+.accion-box.visible{display:flex}
+.accion-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(125,184,153,0.5)}
+.accion-texto{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--text);line-height:1.7;}
+.accion-compromiso{
+  display:flex;align-items:center;gap:10px;margin-top:4px;
+  padding-top:10px;border-top:.5px solid rgba(125,184,153,0.12);
+}
+.accion-check{
+  width:20px;height:20px;border-radius:5px;
+  border:.5px solid rgba(125,184,153,0.35);
+  background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .25s;
+}
+.accion-check.done{background:rgba(125,184,153,0.2);border-color:var(--verde);}
+.accion-check svg{display:none}
+.accion-check.done svg{display:block}
+.accion-label{font-size:12px;color:var(--muted);cursor:pointer;line-height:1.4;font-style:italic;font-family:'Cormorant Garamond',serif}
+.accion-label.done{color:var(--verde);text-decoration:line-through;text-decoration-color:rgba(125,184,153,0.4);}
+
+/* skeleton */
+.skel{background:linear-gradient(90deg,var(--border) 25%,rgba(255,255,255,0.05) 50%,var(--border) 75%);background-size:200% 100%;animation:skel-anim 1.4s ease infinite;border-radius:4px;height:14px;width:100%;}
+@keyframes skel-anim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* actions */
+.actions{display:flex;gap:10px;width:100%;justify-content:center}
+.abtn{flex:1;max-width:200px;padding:11px 16px;border-radius:10px;border:.5px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.abtn:hover{border-color:var(--border2);color:var(--text);background:rgba(255,255,255,0.02)}
+.abtn:disabled{opacity:.4;cursor:not-allowed}
+.abtn.pri{border-color:var(--gold3);color:var(--gold);background:var(--gold2)}
+.abtn.pri:hover{border-color:rgba(201,169,110,0.45);background:rgba(201,169,110,0.18)}
+
+/* write field */
+.wfield{width:100%;background:rgba(255,255,255,0.02);border:.5px solid var(--border);border-radius:14px;padding:1.25rem;display:none;flex-direction:column;gap:12px;}
+.wfield.open{display:flex}
+.wfield-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.wfield textarea{background:transparent;border:none;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;line-height:1.7;resize:none;outline:none;width:100%;min-height:60px;}
+.wfield textarea::placeholder{color:var(--dim)}
+.wfield-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.wfield-note{font-size:11px;color:var(--dim);font-style:italic;font-family:'Cormorant Garamond',serif}
+.wfield-guide{font-size:13px;color:var(--muted);line-height:1.6;font-family:'Cormorant Garamond',serif;font-style:italic;padding-bottom:4px;border-bottom:.5px solid var(--border);margin-bottom:2px;}
+.send-btn{padding:8px 18px;border:.5px solid var(--lav3);border-radius:10px;background:var(--lav2);color:var(--lavender);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;cursor:pointer;transition:all .25s;white-space:nowrap;flex-shrink:0;}
+.send-btn:hover{background:rgba(168,159,216,0.18);border-color:rgba(168,159,216,0.4)}
+.send-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* AI response */
+.resp-box{width:100%;background:rgba(168,159,216,0.05);border:.5px solid rgba(168,159,216,0.15);border-radius:14px;padding:1.5rem;display:none;flex-direction:column;gap:10px;}
+.resp-box.open{display:flex}
+.resp-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(168,159,216,0.45)}
+.resp-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--text);line-height:1.75;}
+.resp-cursor{display:inline-block;width:2px;height:1em;background:var(--lavender);vertical-align:text-bottom;animation:blink .8s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* counter */
+.counter-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim);letter-spacing:.06em}
+.counter-sym{font-size:16px;color:var(--gold);opacity:.6}
+.counter-num{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted)}
+
+/* footer */
+.footer-brand{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:1rem;padding-top:1.5rem;border-top:.5px solid var(--border);width:100%;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;letter-spacing:.12em;color:var(--muted);}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.footer-link{font-size:10px;color:var(--dim);text-decoration:none;letter-spacing:.1em}
+.footer-link:hover{color:var(--muted)}
+
+.fade-in{animation:fin .6s ease}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:480px){
+  .page{padding:2.5rem 1rem 3.5rem;gap:1.75rem}
+  .titulo{font-size:26px}.card{padding:1.5rem}.card-main{font-size:17px}
+  .mirror-wrap{width:165px;height:165px}.rdot{transform-origin:center 82px}.mirror-core{inset:34px}
+  .actions{flex-direction:column;align-items:center}.abtn{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .r1,.r2,.r3,.star,.mirror-wrap.loading .mirror-sym{animation:none}
+  .fade-in{animation:none}.star{opacity:.12}
+}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<main class="page">
+
+  <header class="header">
+    <h1 class="titulo">El <em>Espejo</em> del Ser</h1>
+    <p class="subtitulo">Una herramienta para recordar quién eres.</p>
+    <div class="firma">
+      <div class="firma-line"></div>
+      <span class="firma-text">by Soy Magnetik</span>
+      <div class="firma-line"></div>
+    </div>
+  </header>
+
+  <div class="mirror-wrap" id="mirrorBtn" onclick="nextCard()" role="button" aria-label="Toca para revelar" tabindex="0">
+    <div class="ring r1"><div class="rdot"></div></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="mirror-core">
+      <div class="mirror-sym" id="sym">✦</div>
+      <div class="mirror-hint" id="mhint">toca</div>
+    </div>
+  </div>
+
+  <div class="modes" role="group" aria-label="Tipo de revelación">
+    <button class="mbtn on" onclick="setMode('verdad')" id="bverdad">Verdades</button>
+    <button class="mbtn" onclick="setMode('pregunta')" id="bpregunta">Preguntas</button>
+    <button class="mbtn" onclick="setMode('juego')" id="bjuego">Juego</button>
+    <button class="mbtn" onclick="setMode('hecho')" id="bhecho">Hechos del alma</button>
+    <button class="mbtn" onclick="setMode('accion')" id="baccion">Actívalo hoy</button>
+    <button class="mbtn" onclick="setMode('delusional')" id="bdelusional">Modo Delusional ✦</button>
+  </div>
+
+  <div class="card" id="card" role="region" aria-live="polite">
+    <p class="card-lbl" id="clbl">Bienvenida</p>
+    <p class="card-main" id="cmain">Hay una versión de ti que existía antes de todos los roles, los títulos y las expectativas. Este espejo no te muestra quién deberías ser. Te muestra quién ya eres.</p>
+    <p class="card-sub" id="csub">Toca el espejo para comenzar.</p>
+  </div>
+
+  <!-- Acción concreta destacada -->
+  <div class="accion-box" id="accionBox">
+    <p class="accion-eyebrow">Tu acción para hoy</p>
+    <p class="accion-texto" id="accionTexto"></p>
+    <div class="accion-compromiso">
+      <div class="accion-check" id="accionCheck" onclick="toggleCheck()" role="checkbox" aria-checked="false" tabindex="0">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#7db899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6l3 3 5-5"/></svg>
+      </div>
+      <p class="accion-label" id="accionLabel">Me comprometo a hacer esto hoy.</p>
+    </div>
+  </div>
+
+  <!-- Delusional box -->
+  <div class="delusional-box" id="delusionalBox">
+    <p class="delusional-eyebrow">Tu acción delusional</p>
+    <p class="delusional-texto" id="delusionalTexto"></p>
+    <p class="delusional-tagline">Vuélvete delirantemente magnética.</p>
+    <div class="accion-compromiso">
+      <div class="delusional-check" id="delusionalCheck" onclick="toggleDelCheck()" role="checkbox" aria-checked="false" tabindex="0">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#d4678a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6l3 3 5-5"/></svg>
+      </div>
+      <p class="delusional-commit-lbl" id="delusionalLabel">Lo hago hoy. Sin deliberar.</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="abtn pri" onclick="toggleWrite()" id="writeBtn" aria-expanded="false">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2L11 4.5 3.5 12H1V9.5L8.5 2z"/></svg>
+      Profundizar
+    </button>
+    <button class="abtn" onclick="nextCard()" id="nextBtn">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 6.5A4.5 4.5 0 1 1 6.5 2"/><path d="M6.5 2L9 4.5 6.5 7"/></svg>
+      Otra revelación
+    </button>
+  </div>
+
+  <div class="wfield" id="wfield">
+    <p class="wfield-lbl" id="wlbl">Tu espacio</p>
+    <p class="wfield-guide">Escribe lo que esto movió en ti — una reacción, una memoria, una duda, una resistencia. Mientras más honesta, más poderosa será la respuesta. Toca <em>Enviar</em> y Soy Magnetik te responde en tiempo real.</p>
+    <textarea id="wtxt" rows="3" placeholder="Escribe sin censura..."></textarea>
+    <div class="wfield-footer">
+      <span class="wfield-note">Lo que escribes aquí es tuyo.</span>
+      <button class="send-btn" onclick="deepenWithAI()" id="sendBtn">Enviar ↗</button>
+    </div>
+  </div>
+
+  <div class="resp-box" id="respBox">
+    <p class="resp-lbl">Soy Magnetik responde</p>
+    <p class="resp-text" id="respText"></p>
+  </div>
+
+  <div class="counter-row">
+    <span class="counter-sym">∞</span>
+    <span class="counter-num"><span id="cnum">0</span> revelaciones</span>
+  </div>
+
+  <footer class="footer-brand">
+    <p class="footer-logo">Soy <span>Magnetik</span></p>
+    <p class="footer-tagline">Reconecta. Recuerda. Expande.</p>
+    <a href="https://soymagnetik.com" class="footer-link" target="_blank" rel="noopener">soymagnetik.com</a>
+  </footer>
+
+</main>
+<script>
+var SEEDS={
+  delusional:[
+    "que invite a mandar ese mensaje, propuesta o solicitud que la persona ha estado borrando por miedo al rechazo — hoy, sin pensarlo más",
+    "que invite a ir por el cliente, proyecto o persona que siente inalcanzable — y actuar como si ya fuera suyo",
+    "que invite a entrar a un espacio donde siente que no pertenece y comportarse como si siempre hubiera estado ahí",
+    "que invite a pedir algo que normalmente no pediría: la mesa mejor ubicada, el descuento, la presentación, el favor grande",
+    "que invite a vestirse, moverse o presentarse hoy como la versión de sí misma que quiere ser — no como la que cree que es",
+    "que invite a decir en voz alta o por escrito una afirmación que su mente racional todavía considera exagerada o falsa",
+    "que invite a hacer una compra, inversión o apuesta en sí misma que siempre ha postergado esperando el momento perfecto",
+    "que invite a hablarle a alguien que admira y con quien nunca se ha atrevido a conectar"
+  ],
+  verdad:[
+    "sobre la diferencia entre quien eres y el personaje que aprendiste a encarnar",
+    "sobre lo que el cuerpo sabe antes que la mente",
+    "sobre las partes de ti que has suprimido para encajar",
+    "sobre el miedo como señal de que algo importa de verdad",
+    "sobre los límites como acto de amor propio, no de egoísmo",
+    "sobre los patrones que se repiten como mensajes del alma",
+    "sobre la diferencia entre adaptarse y perderse a sí misma",
+    "sobre la vergüenza y lo que esconde debajo"
+  ],
+  pregunta:[
+    "que invite a mirar hacia adentro sobre quién era la persona antes de sus roles",
+    "sobre qué haría diferente si no le importara la opinión de nadie",
+    "sobre qué parte de sí misma ha estado callando y por qué",
+    "sobre cuál es la creencia que más protege pero en el fondo quiere que sea falsa",
+    "sobre qué le diría su versión más plena si pudiera enviarle un mensaje ahora",
+    "sobre qué dona al mundo con tanta facilidad que ni siquiera considera valioso",
+    "sobre cuándo fue la primera vez que decidió que cierta parte suya era inaceptable"
+  ],
+  juego:[
+    "un ejercicio breve de 2-3 pasos que invite a explorar la identidad a través de la escritura",
+    "un ejercicio de alter ego: dar nombre y forma a la versión libre de sí misma sin miedo",
+    "un ejercicio de contraste entre quién es hoy y quién quiere ser recordada por ser",
+    "un ejercicio de observación interna: notar pensamientos recurrentes sin juzgarlos",
+    "un ejercicio de reconocimiento de dones naturales que la persona subestima",
+    "un ejercicio de arqueología personal: recordar un momento en que fue completamente ella misma"
+  ],
+  hecho:[
+    "de neurociencia que expanda la comprensión de la identidad y el cambio personal",
+    "de epigenética que muestre que la transformación personal es literalmente posible a nivel biológico",
+    "de física o cosmología que conecte a la persona con algo más grande que sus problemas cotidianos",
+    "de psicología sobre cómo se forma la identidad y cómo se puede reescribir conscientemente",
+    "de neuroplasticidad que dé esperanza real sobre cambiar patrones profundos",
+    "sobre cómo las emociones afectan la biología y por qué importa lo que sentimos a diario"
+  ],
+  accion:[
+    "relacionada con poner un límite real hoy: una conversación pendiente, un no que no has dicho, un sí que deberías revocar",
+    "relacionada con hacer algo que la versión auténtica de ti haría pero que has estado posponiendo por miedo a la opinión de otros",
+    "relacionada con dedicar 10 minutos a algo que te hace sentir más tú: escribir, crear, moverse, estar en silencio",
+    "relacionada con decir en voz alta una verdad que normalmente te guardas, aunque sea solo frente al espejo",
+    "relacionada con identificar y eliminar hoy una cosa de tu agenda que no te pertenece realmente",
+    "relacionada con reconocer un logro propio en voz alta o por escrito, sin minimizarlo",
+    "relacionada con tomar una decisión pequeña guiada por lo que realmente quieres, no por lo que se espera de ti",
+    "relacionada con contactar a alguien que te ve como realmente eres, no como el personaje que encarnas"
+  ]
+};
+
+var SYSTEM_BASE='Eres la voz de Soy Magnetik: una presencia que combina sabiduría profunda y pragmatismo. Tu tono es cálido, directo, sin rodeos. No das conferencias ni listas. Hablas como alguien que ha caminado el mismo camino. Respondes SIEMPRE en español. Máximo 4 oraciones en prosa limpia. Sin emojis. Sin bullet points.';
+
+var PROMPTS={
+  verdad:'Genera una verdad breve y sin adornos {seed}. JSON: {"label":"[3-4 palabras evocadoras]","content":"[2-3 oraciones directas]","sub":"[una pregunta o invitación breve]"}',
+  pregunta:'Genera una pregunta poderosa de autoconocimiento {seed}. JSON: {"label":"[3-4 palabras]","content":"[la pregunta, máximo 2 oraciones]","sub":"[nota que invite a ir más profundo]"}',
+  juego:'Genera {seed}. JSON: {"label":"[nombre del ejercicio, 3-4 palabras]","content":"[descripción del ejercicio, 2-3 oraciones]","sub":"[qué revela este ejercicio]"}',
+  hecho:'Genera un hecho fascinante {seed}. JSON: {"label":"[3-4 palabras]","content":"[el hecho en 2-3 oraciones, directo]","sub":"[conexión con la vida interior de la persona]"}',
+  delusional:'Genera una acción delusional y audaz {seed}. El tono es energético, irreverente y empoderador. La acción debe: romper un patrón de autolimitación, ser ejecutable HOY (no algún día), sentirse un poco incómoda pero emocionante. El lenguaje es directo, casi provocador — como quien le habla a alguien que ya sabe que puede más. JSON: {"label":"[nombre de la acción, 3-4 palabras, con energía]","content":"[qué hacer exactamente y por qué rompe el patrón, 2-3 oraciones con actitud]","sub":"[el cambio que produce en la identidad hacerlo hoy]","accion":"[la acción en una oración imperativa y concreta — lo que va en el checkbox]"}',
+  accion:'Genera una acción concreta y pragmática {seed}. La acción debe ser: específica (no genérica), ejecutable hoy (no algún día), y que conecte directamente con quien realmente es la persona más allá de sus roles. JSON: {"label":"[nombre de la acción, 3-4 palabras]","content":"[qué hacer exactamente y por qué conecta con su esencia, 2-3 oraciones]","sub":"[el impacto real de hacerlo hoy]","accion":"[la acción en una oración corta, imperativa, concreta — lo que se escribe en el checkbox]"}'
+};
+
+var SYMS={verdad:['◈','◬','⬡','✧','⊕','⊙'],pregunta:['?','⁇','∿','⌬','⊹'],juego:['▲','◎','◇','△'],hecho:['∞','∅','⊗','∾'],accion:['→','▶','◆','✦','⊢'],delusional:['⚡','✦','▲','◆','★']};
+function randSym(m){var a=SYMS[m]||['✦'];return a[Math.floor(Math.random()*a.length)];}
+
+var mode='verdad',count=0,isLoading=false,started=false;
+
+function initStars(){
+  var c=document.getElementById('stars');
+  for(var i=0;i<38;i++){
+    var s=document.createElement('div');s.className='star';
+    var sz=Math.random()*2+0.5;
+    s.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation-delay:'+Math.random()*5+'s;animation-duration:'+(2.5+Math.random()*4)+'s';
+    c.appendChild(s);
+  }
+}
+
+function setMode(m){
+  mode=m;
+  ['verdad','pregunta','juego','hecho','accion','delusional'].forEach(function(k){
+    var b=document.getElementById('b'+k);
+    b.classList.remove('on');
+  });
+  var activeBtn=document.getElementById('b'+m);
+  activeBtn.classList.add('on');
+  // accion button special style
+  if(m==='accion') activeBtn.style.cssText='';
+}
+
+function setLoading(v){
+  isLoading=v;
+  document.getElementById('mirrorBtn').classList.toggle('loading',v);
+  document.getElementById('nextBtn').disabled=v;
+  document.getElementById('mhint').textContent=v?'...':'toca';
+}
+
+function showSkeleton(){
+  document.getElementById('clbl').textContent='Generando...';
+  document.getElementById('cmain').innerHTML='<div class="skel" style="margin-bottom:8px"></div><div class="skel" style="width:75%"></div>';
+  document.getElementById('csub').textContent='';
+  document.getElementById('accionBox').classList.remove('visible');
+  document.getElementById('card').classList.remove('accion-card');
+  document.getElementById('clbl').classList.remove('accion-lbl');
+}
+
+function showCard(lbl,main,sub,sym,accion){
+  document.getElementById('sym').textContent=sym||'✦';
+  document.getElementById('clbl').textContent=lbl;
+  document.getElementById('cmain').textContent=main;
+  document.getElementById('csub').textContent=sub;
+  document.getElementById('wlbl').textContent=lbl+' — tu espacio';
+
+  var accionBox=document.getElementById('accionBox');
+  var card=document.getElementById('card');
+  var clbl=document.getElementById('clbl');
+
+  if(mode==='delusional'&&accion){
+    document.getElementById('delusionalTexto').textContent=accion;
+    document.getElementById('delusionalLabel').textContent=accion;
+    document.getElementById('delusionalLabel').classList.remove('done');
+    var dchk=document.getElementById('delusionalCheck');
+    dchk.classList.remove('done');dchk.setAttribute('aria-checked','false');
+    document.getElementById('delusionalBox').classList.add('visible');
+    document.getElementById('accionBox').classList.remove('visible');
+    card.classList.add('delusional-card');card.classList.remove('accion-card');
+    clbl.classList.add('delusional-lbl');clbl.classList.remove('accion-lbl');
+  } else if(mode==='accion'&&accion){
+    document.getElementById('accionTexto').textContent=accion;
+    document.getElementById('accionLabel').textContent=accion;
+    document.getElementById('accionLabel').classList.remove('done');
+    var chk=document.getElementById('accionCheck');
+    chk.classList.remove('done');
+    chk.setAttribute('aria-checked','false');
+    accionBox.classList.add('visible');
+    card.classList.add('accion-card');
+    clbl.classList.add('accion-lbl');
+  } else {
+    accionBox.classList.remove('visible');
+    document.getElementById('delusionalBox').classList.remove('visible');
+    card.classList.remove('accion-card');card.classList.remove('delusional-card');
+    clbl.classList.remove('accion-lbl');clbl.classList.remove('delusional-lbl');
+  }
+
+  var c=document.getElementById('card');
+  c.classList.remove('fade-in');void c.offsetWidth;c.classList.add('fade-in');
+}
+
+function toggleCheck(){
+  var chk=document.getElementById('accionCheck');
+  var lbl=document.getElementById('accionLabel');
+  var done=!chk.classList.contains('done');
+  chk.classList.toggle('done',done);
+  chk.setAttribute('aria-checked',String(done));
+  lbl.classList.toggle('done',done);
+}
+
+function toggleDelCheck(){
+  var chk=document.getElementById('delusionalCheck');
+  var lbl=document.getElementById('delusionalLabel');
+  var done=!chk.classList.contains('done');
+  chk.classList.toggle('done',done);
+  chk.setAttribute('aria-checked',String(done));
+  lbl.classList.toggle('done',done);
+}
+
+async function nextCard(){
+  if(isLoading)return;
+  if(!started)started=true;
+  setLoading(true);
+  showSkeleton();
+
+  var seeds=SEEDS[mode];
+  var seed=seeds[Math.floor(Math.random()*seeds.length)];
+  var prompt=(PROMPTS[mode]||PROMPTS.verdad).replace('{seed}',seed)+'\n\nResponde SOLO con JSON válido. Sin markdown, sin texto adicional.';
+
+  var modeLabels={verdad:'Verdad del ser',pregunta:'Pregunta espejo',juego:'Juego de identidad',hecho:'Hecho del alma',accion:'Actívalo hoy',delusional:'Modo Delusional'};
+
+  try{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:'Eres la voz de Soy Magnetik. Respondes SIEMPRE en español. Tono: íntimo, directo, poético y pragmático. Sin listas, sin emojis. Solo prosa limpia. Respondes ÚNICAMENTE con JSON válido, sin texto adicional.',
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    var data=await resp.json();
+    var raw=data.content&&data.content[0]&&data.content[0].text||'{}';
+    var clean=raw.replace(/```json|```/g,'').trim();
+    var obj=JSON.parse(clean);
+    showCard(obj.label||modeLabels[mode],obj.content||'Una revelación llegará.',obj.sub||'',randSym(mode),obj.accion||null);
+    count++;
+    document.getElementById('cnum').textContent=count;
+  }catch(e){
+    showCard(modeLabels[mode],'Algo se movió en el campo. Toca de nuevo para recibir la revelación.','El silencio también tiene información.','✦',null);
+  }
+  setLoading(false);
+}
+
+function toggleWrite(){
+  var f=document.getElementById('wfield');
+  var btn=document.getElementById('writeBtn');
+  var open=f.classList.toggle('open');
+  btn.setAttribute('aria-expanded',String(open));
+  if(open&&!started)nextCard();
+  if(!open){document.getElementById('respBox').classList.remove('open');document.getElementById('respText').textContent='';}
+}
+
+async function deepenWithAI(){
+  var txt=document.getElementById('wtxt').value.trim();
+  var sendBtn=document.getElementById('sendBtn');
+  var respBox=document.getElementById('respBox');
+  var respText=document.getElementById('respText');
+  var main=document.getElementById('cmain').textContent;
+  var lbl=document.getElementById('clbl').textContent;
+  var userMsg=txt
+    ?'La revelación que recibí: "'+lbl+'" — '+main+'\n\nLo que quiero explorar: '+txt
+    :'"'+lbl+'" — '+main+'\n\nQuiero profundizar en esto.';
+
+  sendBtn.disabled=true;
+  respBox.classList.add('open');
+  respText.innerHTML='<span class="resp-cursor"></span>';
+
+  try{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:SYSTEM_BASE+' Termina siempre con una sola pregunta o acción concreta ejecutable hoy.',
+        messages:[{role:'user',content:userMsg}]
+      })
+    });
+    var data=await resp.json();
+    var answer=data.content&&data.content[0]&&data.content[0].text||'El campo está escuchando. Inténtalo de nuevo.';
+    respText.textContent='';
+    var cursor=document.createElement('span');cursor.className='resp-cursor';
+    var i=0;
+    function typeNext(){
+      if(i<answer.length){respText.textContent+=answer[i];respText.appendChild(cursor);i++;setTimeout(typeNext,16);}
+      else{cursor.remove();}
+    }
+    typeNext();
+  }catch(e){
+    respText.textContent='El campo está escuchando. Inténtalo de nuevo.';
+  }
+  sendBtn.disabled=false;
+}
+
+document.getElementById('mirrorBtn').addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();nextCard();}
+});
+document.getElementById('accionCheck').addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleCheck();}
+});
+document.getElementById('delusionalCheck').addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleDelCheck();}
+});
+
+initStars();
+</script>
+</body>
+</html>
