@@ -113,13 +113,17 @@ const slides = [
   <div style="position:absolute;bottom:5%;right:6%;font-size:0.6em;color:rgba(38,38,42,0.4);letter-spacing:0.2em;">@soymagnetik</div>
 </div>`, 5),
 
-  // 6. CTA — trigger DINERO
-  doradoCTA(
-    "¿Cuál de las 3 señales reconociste?",
-    "Comenta ⤵ y te mando el mini-diagnóstico de tu patrón al DM 🤍",
-    "DINERO",
-    6
-  ),
+  // 6. CTA — crema + logo (per diseño: contraste con slide 5 dorado)
+  slide(`<div style="width:100%;height:100%;background:#F0EBE0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:9% 10%;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;gap:1.1em;">
+  <p style="margin:0;font-size:0.6em;letter-spacing:0.3em;text-transform:uppercase;color:#C4963A;font-weight:600;">Soy Magnetik</p>
+  <h2 style="margin:0;font-family:'Georgia','Times New Roman',serif;font-size:2.1em;font-weight:400;color:#26262A;line-height:1.2;font-style:italic;">¿Cuál de las 3 señales<br>reconociste?</h2>
+  <div style="width:32px;height:1.5px;background:#9B7FBF;"></div>
+  <p style="margin:0;font-size:0.88em;color:#48484C;line-height:1.65;max-width:86%;">Comenta ⤵ y te mando el mini-diagnóstico de tu patrón al DM 🤍</p>
+  <div style="background:#26262A;border-radius:100px;padding:0.65em 2em;">
+    <span style="font-size:1em;font-weight:800;color:#F0EBE0;letter-spacing:0.2em;">DINERO</span>
+  </div>
+  <p style="margin:0;font-size:0.6em;color:rgba(38,38,42,0.35);letter-spacing:0.2em;">@soymagnetik</p>
+</div>`, 6),
 
 ];
 

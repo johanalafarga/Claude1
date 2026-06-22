@@ -127,7 +127,7 @@ const slides = [
   // 7. CTA — trigger QUIERO
   slide(`<div style="width:100%;height:100%;background:#C4963A;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7%;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;gap:0.85em;">
   <p style="margin:0;font-size:0.6em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(38,38,42,0.55);font-weight:600;">Últimos lugares</p>
-  <h2 style="margin:0;font-family:'Georgia','Times New Roman',serif;font-size:1.9em;font-weight:400;color:#26262A;line-height:1.15;font-style:italic;">+ canal privado WhatsApp<br>+ acceso permanente.</h2>
+  <h2 style="margin:0;font-family:'Georgia','Times New Roman',serif;font-size:1.9em;font-weight:400;color:#26262A;line-height:1.15;font-style:italic;">No necesitas más información.<br>Necesitas entrar.</h2>
   <div style="display:flex;gap:1.2em;align-items:center;margin:0.2em 0;">
     <span style="font-size:1.4em;font-weight:800;color:#26262A;">$197 MXN</span>
     <div style="width:1px;height:24px;background:rgba(38,38,42,0.3);"></div>

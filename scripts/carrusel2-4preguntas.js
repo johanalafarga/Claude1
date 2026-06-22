@@ -100,7 +100,7 @@ const slides = [
   // 5. Pregunta 4 — grafito (PICO)
   grafitoSlide(
     "¿Qué historia aparece cuando imaginas tener mucho más?",
-    "\"Me volvería materialista.\" · \"Me envidiarían.\" · \"No es para mí.\"\n\nEso que respondiste no es la verdad. Es el patrón.",
+    "\"Me volvería materialista.\" · \"Me envidiarían.\" · \"No es para mí.\"<br><br>Eso que respondiste no es la verdad. Es el patrón.",
     5
   ),
 
